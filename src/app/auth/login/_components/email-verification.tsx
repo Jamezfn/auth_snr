@@ -1,7 +1,7 @@
 "use client"
 
 import { BetterAuthActionButton } from "@/components/auth/better-auth-action-btn"
-import { authClient } from "@/lib/auth-client"
+import { authClient } from "@/lib/auth/auth-client"
 import { useEffect, useRef, useState } from "react"
 
 interface Prop {

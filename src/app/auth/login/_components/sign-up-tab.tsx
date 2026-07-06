@@ -8,14 +8,15 @@ import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/ui/password-input";
 import { Button } from "@/components/ui/button";
 import { LoadingSwap } from "@/components/ui/loading-swap";
-import { authClient } from "@/lib/auth-client";
+import { authClient } from "@/lib/auth/auth-client";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
+import { NumberInput } from "@/components/ui/number-input";
 
 const signUpSchema = z.object({
 	name: z.string().min(1),
 	email: z.email().min(1),
-	password: z.string().min(6)
+	password: z.string().min(6),
+	favoriteNumber: z.number().int()
 });
 
 type SignUpForm = z.infer<typeof signUpSchema>;
@@ -87,6 +88,19 @@ export function SignUpTab({ openEmailVerificationTab }:Prop) {
 							<FormLabel>password</FormLabel>
 							<FormControl>
 								<PasswordInput {...field}/>
+							</FormControl>
+							<FormMessage/>
+						</FormItem>
+					)}
+				/>
+				<FormField
+					control={form.control}
+					name="favoriteNumber"
+					render={({ field }) => (
+						<FormItem>
+							<FormLabel>Favorite Number</FormLabel>
+							<FormControl>
+								<NumberInput {...field}/>
 							</FormControl>
 							<FormMessage/>
 						</FormItem>
