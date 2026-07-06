@@ -18,8 +18,12 @@ const signInSchema = z.object({
 });
 
 type SignInForm = z.infer<typeof signInSchema>;
+interface Prop {
+	openEmailVerificationTab: (email: string) => void;
+	openForgotPassword: () => void;
+}
 
-export function SignInTab() {
+export function SignInTab({ openEmailVerificationTab, openForgotPassword }: Prop) {
 	const router = useRouter()
 	const form = useForm<SignInForm>({
 		resolver: zodResolver(signInSchema),
@@ -32,10 +36,13 @@ export function SignInTab() {
 	const { isSubmitting } = form.formState;
 	
 	async function handleSignIn(data: SignInForm) {
-		authClient.signIn.email(
+		await authClient.signIn.email(
 			{ ...data, callbackURL: "/" }, 
 			{
 				onError: (error) => {
+					if (error.error.code === "EMAIL_NOT_VERIFIED") {
+						openEmailVerificationTab(data.email);
+					}
 					toast.error(error.error.message || "Failed to sign in")
 				},
 				onSuccess: () => {
@@ -69,7 +76,18 @@ export function SignInTab() {
 					name="password"
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>password</FormLabel>
+							<div className="flex justify-between items-center">
+								<FormLabel>password</FormLabel>
+								<Button
+									type="button"
+									variant="link"
+									size="sm"
+									className="text-sm font-normal underline"
+									onClick={openForgotPassword}
+								>
+									Forgot password
+								</Button>
+							</div>
 							<FormControl>
 								<PasswordInput {...field}/>
 							</FormControl>

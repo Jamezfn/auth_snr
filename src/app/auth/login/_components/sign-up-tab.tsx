@@ -19,9 +19,11 @@ const signUpSchema = z.object({
 });
 
 type SignUpForm = z.infer<typeof signUpSchema>;
+interface Prop {
+	openEmailVerificationTab: (email: string) => void;
+}
 
-export function SignUpTab() {
-	const router = useRouter()
+export function SignUpTab({ openEmailVerificationTab }:Prop) {
 	const form = useForm<SignUpForm>({
 		resolver: zodResolver(signUpSchema),
 		defaultValues: {
@@ -34,20 +36,18 @@ export function SignUpTab() {
 	const { isSubmitting } = form.formState;
 	
 	async function handleSignUp(data: SignUpForm) {
-		authClient.signUp.email(
+		const res = await authClient.signUp.email(
 			{ ...data, callbackURL: "/" }, 
 			{
 				onError: (error) => {
 					toast.error(error.error.message || "Failed to sign up")
 				},
-				onSuccess: () => {
-					router.push("/")
-				}
 			}
-		)
+		);
 
-		await new Promise(resolve => setTimeout(resolve, 2000));
-		console.log(data);
+		if (res.error == null && !res.data?.user.emailVerified) {
+			openEmailVerificationTab(data.email);
+		}
 	}
 
 	return (
