@@ -1,8 +1,8 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { auth } from "@/lib/auth/auth";
 import { headers } from "next/headers";
-import { SetPasswordButton } from "./set-password-button";
-import { ChangePasswordForm } from "./change-password-form";
+import { SetPasswordButton } from "../password/set-password-button";
+import { ChangePasswordForm } from "../change-password/change-password-form";
 
 export async function SecurityTab({ email }: { email: string }) {
 	const accounts = await auth.api.listUserAccounts({ headers: await headers() });

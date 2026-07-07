@@ -7,12 +7,12 @@ import { headers } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { ProfileUpdateForm } from "./_components/profile-update-form";
+import { ProfileUpdateForm } from "./_components/profile/profile-update-form";
 import { LoadingSuspense } from "./_components/loading-suspense-component";
-import { SecurityTab } from "./_components/security-tab";
-import { SessionTab } from "./_components/session-tab";
-import { LinkedAccountsTab } from "./_components/linked-accounts";
-import { AccountDeletion } from "./_components/account-deletion";
+import { SecurityTab } from "./_components/security/security-tab";
+import { SessionTab } from "./_components/session/session-tab";
+import { LinkedAccountsTab } from "./_components/linked-accounts/linked-accounts";
+import { AccountDeletion } from "./delete/account-deletion";
 
 export default async function ProfilePage() {
 	const session = await auth.api.getSession({ headers: await headers() });
