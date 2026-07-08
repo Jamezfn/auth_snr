@@ -5,9 +5,13 @@ import { SetPasswordButton } from "../password/set-password-button";
 import { ChangePasswordForm } from "../change-password/change-password-form";
 import { Badge } from "@/components/ui/badge";
 import { TwoFactorAuth } from "./two-factor-auth";
+import { PassKeyManagement } from "../passkey-management";
 
 export async function SecurityTab({ email, isTwoFactorEnabled }: { email: string, isTwoFactorEnabled: boolean }) {
-	const accounts = await auth.api.listUserAccounts({ headers: await headers() });
+	const [passkeys, accounts] = await Promise.all([
+		auth.api.listPasskeys({ headers: await headers() }),
+		auth.api.listUserAccounts({ headers: await headers() })
+	]);
 	const hasPasswordAccount = accounts.some((a) => a.providerId === "credential");
 
 	return (
@@ -44,6 +48,14 @@ export async function SecurityTab({ email, isTwoFactorEnabled }: { email: string
 					</CardContent>
 				</Card>
 			)}
+			<Card>
+				<CardHeader>
+					<CardTitle>passkeys</CardTitle>
+				</CardHeader>
+				<CardContent>
+					<PassKeyManagement passkeys={passkeys}/>
+				</CardContent>
+			</Card>
 		</div>
 	);
 }

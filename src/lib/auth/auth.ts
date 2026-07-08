@@ -8,6 +8,7 @@ import { createAuthMiddleware } from "better-auth/api";
 import { sendWelcomeEmail } from "../emails/send-welcome-email";
 import { sendDeleteAccountVerificationEmail } from "../emails/delete-verification-email";
 import { twoFactor } from "better-auth/plugins/two-factor";
+import { passkey } from "@better-auth/passkey";
 
 export const auth = betterAuth({
 	user: {
@@ -89,5 +90,5 @@ export const auth = betterAuth({
 			}
 		})
 	},
-	plugins: [nextCookies(), twoFactor()],
+	plugins: [nextCookies(), twoFactor(), passkey()],
 });
