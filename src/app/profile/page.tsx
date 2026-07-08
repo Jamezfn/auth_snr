@@ -92,7 +92,10 @@ export default async function ProfilePage() {
 
 				<TabsContent value="security">
 					<LoadingSuspense>
-						<SecurityTab email={session.user.email}/>
+						<SecurityTab
+							email={session.user.email}
+							isTwoFactorEnabled={session.user.twoFactorEnabled ?? false}
+						/>
 					</LoadingSuspense>
 				</TabsContent>
 
