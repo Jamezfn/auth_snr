@@ -48,7 +48,7 @@ export default async function ProfilePage() {
 								{session.user.name || "User Profile"}
 							</h1>
 
-							{/* <Badge>{session.user.role}</Badge> */}
+							<Badge>{session.user.role}</Badge>
 						</div>
 
 						<p className="text-muted-foreground">
