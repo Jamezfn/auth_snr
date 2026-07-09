@@ -39,6 +39,9 @@ export default function page() {
 							<Button asChild size="lg">
 								<Link href="/profile">Profile</Link>
 							</Button>
+							<Button asChild size="lg" variant="outline">
+								<Link href="/organisations">Organisation</Link>
+							</Button>
 							{hasAdminPermission && (
 							<Button variant="outline" asChild>
 								<Link href="/admin">Admin</Link>
